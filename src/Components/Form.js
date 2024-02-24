@@ -1,11 +1,15 @@
 import React from "react";
+import { useState } from 'react';
 import "../App.css";
+import { ExportAsExcel } from "react-export-table";
 
 
 function Form() {
+    const [name, setName] = useState("");
     function changeradioother(){
         var other = document.getElementById("other");
         other.value=document.getElementById("inputother").value;
+        setName(other.value)
       }
       function setRequired(){
         document.getElementById("inputother").required=true;
@@ -15,16 +19,21 @@ function Form() {
             document.getElementById("inputother").required = false;
         }
       }
+      const handleSubmit = (event) => {
+        event.preventDefault();
+        alert(`The name you entered was: ${name}`)
+      }
     return (
         <div className="Form">
             <div className="title">Medic questions</div>
             <div className="questions">
-                <form method="POST" action="test.txt">
-                    <input type="radio" value="A1" name="q1" onClick={removeRequired}/>answer1<br></br>
-                    <input type="radio" value="A2" name="q1" onClick={removeRequired}/>answer2<br></br>
-                    <input type="radio" value="A3" name="q1" onClick={removeRequired}/>answer3<br></br>
-                    <input type="radio" value="A4" name="q1" onClick={removeRequired}/>answer4<br></br>
-                    <input type="radio" value="A5" name="q1" onClick={setRequired} id="other" />other<br></br>
+                <form onSubmit={handleSubmit}   >
+                    <div className="Q1">Question 1</div>
+                    <input type="radio" value={name} onChange={(e) => setName("A1")} name="Q1" onClick={removeRequired}/>answer1<br></br>
+                    <input type="radio" value="A2" onChange={(e) => setName("A2")} name="Q1" onClick={removeRequired}/>answer2<br></br>
+                    <input type="radio" value="A3" name="Q1" onClick={removeRequired}/>answer3<br></br>
+                    <input type="radio" value="A4" name="Q1" onClick={removeRequired}/>answer4<br></br>
+                    <input type="radio" value="A5" name="Q1" onClick={setRequired} id="other" />other<br></br>
                     <input id="inputother" type="text" name="othertext" onChange={changeradioother}/>
                     <input type="submit" value="Submit"/>
                 </form>
